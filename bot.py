@@ -19,7 +19,7 @@ class PhobosBot(commands.Bot):
         )
         self.logger = logging.getLogger("bot")
 
-        self.admins = [1012091795737419857]
+        self.admins = [767446852643192864]
 
     async def setup_hook(self) -> None:
         await self.load_cogs()
