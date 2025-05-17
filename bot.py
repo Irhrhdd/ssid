@@ -5,7 +5,7 @@ import sys
 import discord
 from discord.ext import commands
 
-import config
+import config  # Keep this for public API keys or constants
 from views.button_one import ButtonViewOne
 
 
@@ -26,6 +26,7 @@ class PhobosBot(commands.Bot):
 
     async def on_ready(self):
         self.add_view(ButtonViewOne())
+        self.logger.info(f"Bot connected as {self.user}")
 
     @staticmethod
     def setup_logging() -> None:
@@ -56,4 +57,9 @@ if __name__ == "__main__":
     bot = PhobosBot()
     bot.remove_command("help")
     bot.setup_logging()
-    bot.run(config.TOKEN, log_handler=None)
+
+    token = os.getenv("DISCORD_TOKEN")
+    if not token:
+        raise RuntimeError("DISCORD_TOKEN not set in environment variables.")
+    
+    bot.run(token, log_handler=None)
